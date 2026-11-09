@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用麥克風聽音，從單音一步步找回口琴手感。">
+  <title>口琴復練室</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="src/app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">口琴練習 · 本機聽音</p>
+      <h1>口琴復練室</h1>
+      <p>先吹穩一個音，再接到下一個音。</p>
+    </header>
+
+    <section aria-labelledby="setup-title">
+      <h2 id="setup-title">1. 選琴和課程</h2>
+      <div class="fields">
+        <label>口琴 <select id="profile"></select></label>
+        <label>起始 Do（含八度） <select id="tonic"></select></label>
+        <label>課程 <select id="lesson"></select></label>
+      </div>
+    </section>
+
+    <section aria-labelledby="mic-title">
+      <h2 id="mic-title">2. 接上麥克風</h2>
+      <div class="fields">
+        <label>音訊輸入
+          <select id="device"><option value="">自動（優先 ReSpeaker）</option></select>
+        </label>
+        <label>輸入聲道
+          <select id="channel" disabled><option value="0">CH 1</option></select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="mic" type="button">啟用麥克風</button>
+        <button id="calibrate" class="secondary" type="button" disabled>量測環境底噪</button>
+      </div>
+      <p id="mic-status" role="status">接上 ReSpeaker XVF3800，然後啟用麥克風。</p>
+      <details>
+        <summary>收音設定</summary>
+        <p id="input-level">目前音量 —</p>
+        <p id="mic-info">啟用後顯示裝置、取樣率、聲道及瀏覽器處理狀態。</p>
+        <label for="threshold">收音門檻 <output id="threshold-value" for="threshold">−45 dBFS</output></label>
+        <input id="threshold" type="range" min="-70" max="-20" value="-45">
+        <p>門檻越低越容易收到微弱的音，也越容易收到環境聲。</p>
+      </details>
+    </section>
+
+    <section aria-labelledby="practice-title">
+      <h2 id="practice-title">3. 照提示吹</h2>
+      <p id="lesson-hint"></p>
+      <div class="practice-grid">
+        <div>
+          <p class="eyebrow">目標音</p>
+          <p id="target" class="note">—</p>
+          <p id="step"></p>
+        </div>
+        <div>
+          <p class="eyebrow">聽到的音</p>
+          <p id="heard" class="note">—</p>
+          <p id="intonation">等待收音</p>
+        </div>
+      </div>
+      <label class="meter-label" for="hold">持音進度 <span id="hold-label"></span></label>
+      <progress id="hold" max="1" value="0"></progress>
+      <p id="feedback" role="status">先啟用麥克風，也可以先聽目標音。</p>
+      <div class="actions">
+        <button id="reference" type="button">聽目標音</button>
+        <button id="restart" class="secondary" type="button">本課重來</button>
+        <button id="next" class="secondary" type="button" hidden>下一課</button>
+      </div>
+      <ol id="sequence" aria-label="簡譜和目標音順序"></ol>
+    </section>
+
+    <footer>
+      <p>音訊在瀏覽器即時分析。本機只記住完成的課程。<a href="https://github.com/pcpcchen-coder/Harmonica/blob/main/docs/practice.md">讀復練手冊</a></p>
+    </footer>
+  </main>
+</body>
+</html>
